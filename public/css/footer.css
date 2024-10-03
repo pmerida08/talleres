@@ -1,0 +1,46 @@
+html, body {
+    height: 100%;
+}
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    flex-shrink: 0;
+}
+.divMainSection {
+    flex-grow: 1;
+}
+
+footer {
+    display: flex;
+    text-align: center;
+    justify-content: space-between;
+    padding: 20px 0;
+    background-color: #0772b9;
+    color: white;
+    flex-shrink: 0;
+}
+
+footer a {
+    color: white; 
+    text-decoration: none;
+    margin: 0 15px; 
+}
+  
+.social-icons {
+    display: inline-block; 
+    padding: 0 10px 0 0;
+}
+  
+.social-icon {
+    margin: 0 10px; 
+    font-size: 24px; 
+}
+  
+.contact-info {
+    margin-top: 5px; 
+    padding: 0 0 0 10px;
+}

@@ -1,0 +1,133 @@
+<?php
+$equipos = $data["equipos"];
+?>
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Andres">
+    <link rel="icon" href="https://www.iesgrancapitan.org/wp-content/uploads/sites/2/2021/06/cropped-icono_web_GranCapitan-32x32.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="../../css/equipo.css">
+    <link rel="stylesheet" href="../../css/footer.css">
+
+    <title>Equipos-Centro Educativo IES Gran Capitán</title>
+    <script>
+        function confirmDelete(equipoId) {
+            const confirmation = confirm("¿Estás seguro de que deseas eliminar este equipo?");
+            if (confirmation) {
+                window.location.href = "/admin/equipos/delete/" + equipoId;
+            }
+        }
+
+        document.querySelectorAll('.equipo').forEach(function(element) {
+            element.addEventListener('click', function() {
+                this.classList.toggle('active');
+            });
+        });
+
+    </script>
+</head>
+
+<body>
+    <header>
+        <a href="https://www.iesgrancapitan.org" target="_blanck"><img src="https://www.iesgrancapitan.org/wp-content/uploads/sites/2/2021/06/Logo_IES_GranCapitan_header.png" alt=""></a>
+        <a href="/" title="Página de Inicio" class="back-arrow-view">&#8592;</a>       
+        <?php
+        echo "<a href=\"/admin/logout\"><i class=\"fas fa-sign-out-alt botonSesionAdmin\" title=\"Cerrar Sesión\"></i></a>";
+        ?>
+    </header>
+    <h1>Dep. Informática</h1>
+    <div class="divMainSection">
+        <main>
+            <h2>Equipos</h2>
+            <div class="divbusquedaExportarImportar">
+                <form action="/admin/equipos/" method="post">
+                    <div>
+                        <input type="text" name="busqueda" value="<?php echo isset($data["valueInput"]) ? $data["valueInput"] : ""; ?>">
+                        <input type="submit" name="buscar" value="Buscar">
+                    </div>
+                </form>
+            </div>
+            <div class="equipos">
+                <?php
+                foreach ($equipos as $key => $equipo) {
+                    $css = "";
+                    foreach ($data["estados"] as $key => $estado) {
+                        if ($equipo["t_estados_id"] == $estado["id"]) {
+                            $css = $estado["css"];
+                        }
+                    }
+                    echo "<div class=\"equipo\" style = \"".$css."\" onclick=\"this.classList.toggle('active');\">";
+                    echo "<div class= \"titulo\">";
+                    echo "<h3>" . $equipo["codigo"] . "</h3>";
+                    echo "<div class= \"deleteEdit\">";
+                    echo "<a href=\"/admin/equipos/edit/" . $equipo["id"] . "\"><span class=\"material-symbols-outlined edit\">edit</span></a>";
+                    echo "<a href=\"#\" onclick=\"confirmDelete(" . $equipo['id'] . ")\"><span class=\"material-symbols-outlined del\">delete</span></a>";
+                    echo "</div>";
+                    echo "</div>";
+                    echo "<p>" . $equipo["descripcion"] . "</p>";
+                    $existeUbicacion = false;
+                    foreach ($data["ubicaciones"] as $key => $ubicacion) {
+                        if ($ubicacion["equipos_id"] == $equipo["id"]) {
+                            foreach ($data["aulas"] as $key => $aula) {
+                                if ($aula["id"] == $ubicacion["aulas_id"]) {
+                                    echo "<p>Ubicacion: Aula " . $aula["num_aula"] . "</p>";
+                                    $existeUbicacion = true;
+                                }
+                            }
+                        }
+                    }
+                    if (!$existeUbicacion) {
+                        echo "<p>Ubicacion: No existe</p>";
+                    }
+                    echo "<div class=\"contenido-oculto\">";
+                    echo "<div style=\"display:flex; align-items: flex-end;padding:5px\">";
+                    if (!$equipo["referencia_ja"] && !$equipo["imagen"]) {
+                        echo "<p style=\"padding-left: 5px;\">Ningún dato extra</p>";
+                    }else{
+                        if ($equipo["referencia_ja"]) {
+                            echo "<p style=\"padding-left: 5px;\">Ref. Junta And.: <i>".$equipo["referencia_ja"]."</i></p>";
+                        }
+                        if ($equipo["imagen"]) {
+                            echo "<img src=\"../../imagenes/".$equipo["imagen"]."\" alt=\"Error\" style=\"height: 40px; width: auto;\">";
+                        }
+                    }
+                    echo "</div>";
+                    echo "</div>";
+                    echo "</div>";
+                }
+                ?>
+            </div>
+            <?php
+            echo "<a href=\"/admin/equipos/add\" class= \"enlaceAdd\">+</a>";
+            ?>
+        </main>
+        <section>
+            <h2>Gestiones</h2>
+            <ul>
+                <li> <a href="/admin/aulas/">Gestión de aulas</a></li>
+                <li> <a href="/admin/equipos/" id="seleccionado">Gestión de equipos</a></li>
+                <li> <a href="/admin/alumnos/">Gestión de alumnos</a></li>
+                <li> <a href="/admin/profesores/">Gestión de profesores</a></li>
+                <li> <a href="/admin/reservas/">Reservas</a></li>
+                <li> <a href="/admin/incidencias/">Incidencias</a></li>
+            </ul>
+        </section>
+    </div>
+    <footer>
+        <div class="contact-info">
+            IES Gran Capitán 2023 · Avda Arcos de la Frontera s/n, Córdoba(Spain) · Tel: 957379710
+        </div>
+        <div class="social-icons">
+            <a href="https://twitter.com/ies_grancapitan" class="social-icon"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.iesgrancapitan.org/#top" class="social-icon"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.facebook.com/iesgrancapitan" class="social-icon"><i class="fab fa-facebook-square"></i></a>
+        </div>
+    </footer>
+</body>
+
+</html>

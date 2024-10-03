@@ -1,0 +1,274 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+h1,
+h2 {
+    text-align: center;
+    position: relative;
+}
+
+.back-arrow {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #0772b9;
+    font-size: 50px;
+    text-decoration: none;
+}
+
+.botonSesionAdmin {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 8px 16px;
+    background-color: #0772b9;
+    border: 1px solid #0772b9;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #fff;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.botonGestionDatos {
+    margin-right: 70px;
+}
+
+.botonSesionAdmin:hover,
+.botonGestionDatos:hover {
+    background-color: #003c80;
+    color: #fff;
+}
+
+form {
+    width: 50%;
+    margin: 0 auto;
+}
+
+input[type="text"],
+textarea,
+select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+input[type="submit"] {
+    background-color: #0772b9;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.reservas {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    /* height: 350px; */
+    /* overflow-y: auto; */
+    flex-wrap: wrap;
+    /* align-content: flex-start; */
+    margin-bottom: 20px;
+}
+
+.reserva {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 300px;
+    height: 220px;
+    padding: 10px;
+    margin: 20px;
+    box-sizing: border-box;
+}
+
+.enlaceEdit,
+.enlaceDelete,
+.enlaceAdd {
+    display: inline-block;
+    padding: 8px 16px;
+    margin: 5px 5px 0 0;
+    text-align: center;
+    text-decoration: none;
+    color: #0772b9;
+    border: 1px solid #0772b9;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.enlaceEdit:hover,
+.enlaceDelete:hover,
+.enlaceAdd:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.enlaceAdd {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 40px;
+    height: 56px;
+    background-color: #0772b9;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: #fff;
+    font-size: 24px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+.titulo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.material-symbols-outlined {
+    font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+}
+
+.del {
+    color: red;
+    transition: 0.5s ease-in-out;
+}
+
+.edit {
+    color: green;
+    transition: 0.5s ease-in-out;
+}
+
+.del:hover, .edit:hover{
+    scale: 1.10;
+}
+
+.deleteEdit {
+    display: flex;
+    gap: 10px;
+}
+
+
+header{
+    display: flex;
+    align-items: center;
+}
+header img {
+    margin: 10px 0 0 10px;
+}
+
+.back-arrow-view {
+    color: #0772b9;
+    font-size: 50px;
+    text-decoration: none;
+    position: fixed;
+    top: 5px;
+    right: 80px;
+}
+
+.formBuscar{
+    display: flex;
+    justify-content: center;
+}
+
+form>div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+}
+
+form input[type="text"]{
+    margin: 0;
+}
+
+.divMainSection {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.divMainSection main {
+    flex: 8;
+    box-sizing: border-box;
+    order: 2;
+}
+
+.divMainSection section {
+    flex: 2;
+    padding: 20px;
+    background-color: #f4f4f4;
+    order: 1;
+    width: 300px;
+    height: 300px;
+    border-radius: 10px; 
+}
+
+.divMainSection section ul {
+    list-style-type: none; 
+    padding-left: 0;
+}
+
+.divMainSection section ul li a {
+    text-decoration: none; 
+    color: #333;
+    font-weight: bold;
+}
+
+
+#seleccionado{
+    text-decoration: underline;
+}
+
+ul {
+    padding-left: 20px;
+}
+
+ul li {
+    margin-bottom: 10px;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.spanFallo {
+    border-radius: 20px;
+    background-color: red;
+    color: white;
+    padding: 10px;
+    width: max-content;
+    display: flex;
+    margin: 0 auto 20px auto;
+}

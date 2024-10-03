@@ -12,6 +12,16 @@ h2 {
     text-align: center;
 }
 
+ul {
+    list-style-type: none;
+    padding-left: 0;
+    font-size: 20px;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
 .botonSesionAdmin, .botonGestionDatos, .botonVerIncidencias, .botonVerIncidenciasAlumno, .botonVerIncidenciasInvitado {
     position: fixed;
     top: 20px;

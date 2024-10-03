@@ -148,8 +148,8 @@ class AulasController extends BaseController
                 "ubicaciones" => $ubicacion->getUbicacionPorId($numero),
                 "numMesas" => $aula->getNumMesas($numero)[0]["num_mesas"],
                 "numAula" => $aula->getnumAula($numero)[0]["num_aula"],
-                "grupo1" => $grupos->getNombrePorAulaId1($numero)[0]["nombre"],
-                "grupo2" => $grupos->getNombrePorAulaId2($numero)[0]["nombre"],
+                "grupo1" => isset($grupos->getNombrePorAulaId1($numero)[0]["nombre"]) ? $grupos->getNombrePorAulaId1($numero)[0]["nombre"] : "",
+                "grupo2" => isset($grupos->getNombrePorAulaId2($numero)[0]["nombre"]) ? $grupos->getNombrePorAulaId2($numero)[0]["nombre"] : "",
                 "grupos" => $grupos->getAll(),
                 "equipos" => $equipos->getAll(),
                 "estadosEquipos" => $equipos->getAllEstados()
@@ -161,8 +161,8 @@ class AulasController extends BaseController
                 "ubicaciones" => $ubicacion->getUbicacionPorId($numero),
                 "numMesas" => $aula->getNumMesas($numero)[0]["num_mesas"],
                 "numAula" => $aula->getnumAula($numero)[0]["num_aula"],
-                "grupo1" => $grupos->getNombrePorAulaId1($numero)[0]["nombre"],
-                "grupo2" => $grupos->getNombrePorAulaId2($numero)[0]["nombre"],
+                "grupo1" => isset($grupos->getNombrePorAulaId1($numero)[0]["nombre"]) ? $grupos->getNombrePorAulaId1($numero)[0]["nombre"] : "",
+                "grupo2" => isset($grupos->getNombrePorAulaId2($numero)[0]["nombre"]) ? $grupos->getNombrePorAulaId2($numero)[0]["nombre"] : "",
                 "grupos" => $grupos->getAll(),
                 "equipos" => $equipos->getAll(),
                 "estadosEquipos" => $equipos->getAllEstados()

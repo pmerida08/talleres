@@ -31,7 +31,8 @@ class Aulas extends DBAbstractModel
         $this->message = "Aula mostrada";
         return $this->rows;
     }
-    public function getAll(){
+    public function getAll()
+    {
         $this->query = "SELECT * FROM aulas";
         $this->get_results_from_query();
         $this->message = "Aulas mostradas";
@@ -60,10 +61,15 @@ class Aulas extends DBAbstractModel
         if ($id == "") {
             $id = $this->id;
         }
-        $this->query = "DELETE FROM aulas WHERE id=:id";
+        // Primero, eliminar los registros dependientes en la tabla grupos
+        $this->query = "DELETE FROM grupos WHERE aulas_id2 = :id";
         $this->params['id'] = $id;
         $this->get_results_from_query();
-        $this->message = "Aula borrada";
+
+        // Luego, eliminar el aula
+        $this->query = "DELETE FROM aulas WHERE id = :id";
+        $this->params['id'] = $id;
+        $this->get_results_from_query();
     }
 
     // Getters Propiedades
@@ -89,13 +95,13 @@ class Aulas extends DBAbstractModel
         $this->get_results_from_query();
         return $this->rows;
     }
-    
+
     public function getNumMesas($id)
     {
         $this->query = "SELECT num_mesas FROM aulas WHERE id = :id";
         $this->params['id'] = $id;
         $this->get_results_from_query();
-        return $this->rows;    
+        return $this->rows;
     }
 
     // Setters Propiedades
@@ -107,11 +113,9 @@ class Aulas extends DBAbstractModel
     {
         $this->numAula = $numAula;
     }
-    
+
     public function setNumMesas($NumMesas)
     {
         $this->numMesas = $NumMesas;
     }
-
-    
 }

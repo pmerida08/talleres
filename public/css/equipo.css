@@ -1,0 +1,425 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    position: relative;
+}
+
+header{
+    display: flex;
+    align-items: center;
+}
+header img {
+    margin: 10px 0 0 10px;
+}
+
+h2 {
+    text-align: center;
+}
+
+.equipos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    /* height: 350px; */
+    /* overflow-y: auto; */
+    flex-wrap: wrap;
+    /* align-content: flex-start; */
+    margin-bottom: 20px;
+}
+
+.equipos a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.equipos a:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+.equipo h2 {
+    margin-top: 0;
+}
+
+.equipo p {
+    margin-bottom: 0;
+}
+
+.enlaceEdit,
+.enlaceDelete,
+.enlaceAdd {
+    display: inline-block;
+    padding: 8px 16px;
+    margin: 5px 5px 0 0;
+    text-align: center;
+    text-decoration: none;
+    color: #0772b9;
+    border: 1px solid #0772b9;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.enlaceEdit:hover,
+.enlaceDelete:hover,
+.enlaceAdd:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.enlaceAdd {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 40px;
+    height: 56px;
+    background-color: #0772b9;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: #fff;
+    font-size: 24px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.enlaceAdd:hover {
+    background-color: #003c80;
+}
+
+.botonSesionAdmin,
+.botonGestionDatos {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 8px 16px;
+    background-color: #0772b9;
+    border: 1px solid #0772b9;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #fff;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.botonGestionDatos {
+    margin-right: 70px;
+}
+
+.botonSesionAdmin:hover,
+.botonGestionDatos:hover {
+    background-color: #003c80;
+    color: #fff;
+}
+
+form {
+    width: 80%;
+    margin: 0 auto;
+}
+
+input[type="text"],
+textarea,
+select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+input[type="submit"] {
+    background-color: #0772b9;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.back-arrow-view {
+    color: #0772b9;
+    font-size: 50px;
+    text-decoration: none;
+    position: fixed;
+    top: 5px;
+    right: 80px;
+}
+
+.back-arrow {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #0772b9;
+    font-size: 50px;
+    text-decoration: none;
+}
+
+.material-symbols-outlined {
+    font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+}
+
+.del {
+    color: red;
+    transition: 0.5s ease-in-out;
+}
+
+.edit {
+    color: green;
+    transition: 0.5s ease-in-out;
+}
+
+.del:hover, .edit:hover{
+    scale: 1.10;
+}
+
+.titulo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.deleteEdit {
+    display: flex;
+    gap: 10px;
+}
+.deleteEdit {
+    display: flex;
+    align-items: center;
+}
+
+.deleteEdit a,
+.deleteEdit form {
+    margin-left: 5px;
+}
+
+.icon-button {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.icon-button .material-symbols-outlined {
+    font-size: 24px;
+    color: inherit;
+    vertical-align: middle;
+}
+
+.icon-button:hover .material-symbols-outlined {
+    color: #007BFF; /* Cambia el color al pasar el ratón */
+}
+
+.equipo {
+    padding: 0 10px 10px 10px;
+    margin: 10px;
+    background-color: #fff;
+    border-radius: 10px;
+    transition: transform 0.5s;
+    transform-style: preserve-3d;
+    position: relative;
+}
+
+.equipo:hover {
+    transform: scale(1.05); /* Agrandar el tamaño */
+}
+
+.contenido-oculto {
+    display: none;
+    backface-visibility: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: rotateY(180deg);
+}
+
+.equipo.active {
+    transform: rotateY(180deg);
+}
+
+.equipo.active .contenido-oculto {
+    display: block;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.divMainSection {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0 20px 0;
+}
+
+.divMainSection main {
+    flex: 8;
+    box-sizing: border-box;
+    order: 2;
+}
+
+.divMainSection section {
+    flex: 2;
+    padding: 20px;
+    background-color: #f4f4f4;
+    order: 1;
+    width: 300px;
+    height: 300px;
+    border-radius: 10px; 
+}
+
+.divMainSection section ul {
+    list-style-type: none; 
+    padding-left: 0;
+}
+
+.divMainSection section ul li a {
+    text-decoration: none; 
+    color: #333;
+    font-weight: bold;
+}
+
+
+#seleccionado{
+    text-decoration: underline;
+}
+
+ul {
+    padding-left: 20px;
+}
+
+ul li {
+    margin-bottom: 10px;
+}
+
+
+
+.divbusquedaExportarImportar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.divbusquedaExportarImportar form{
+    margin: 10px;
+}
+
+.divbusquedaExportarImportar div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.divbusquedaExportarImportar input[type="text"]{
+    width: 50%;
+    margin: 0;
+}
+
+.spanFallo {
+    border-radius: 20px;
+    background-color: red;
+    color: white;
+    padding: 10px;
+    width: max-content;
+    display: flex;
+    margin: 0 auto 20px auto;
+}
+
+.alumnos {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.alumno {
+    padding: 10px;
+    margin: 10px;
+    background-color: #fff;
+    border-radius: 10px;
+    width: 200px;
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+.alumno:hover {
+    transform: scale(1.05);
+}
+
+.alumno h3 {
+    margin-top: 0;
+}
+
+.alumno p {
+    margin-bottom: 10px;
+}
+
+.alumno .asignar-button {
+    background-color: #0772b9;
+    color: #fff;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.alumno .asignar-button:hover {
+    background-color: #005f8d;
+}
+
+.asignacion-alumno {
+    margin-top: 20px;
+}
+
+.search-form {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.search-form input[type="text"] {
+    width: 50%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.button-style {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 5px;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    background-color: green;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button-style:hover {
+    background-color: #005f8d;
+}
+
+
+

@@ -27,24 +27,24 @@ class AlumnosController extends BaseController
         $this->renderHTML("../views/profesor/alumnos/alumnosView.php", $data);
     }
 
-    public function alumnosExportar()
-    {
-        $alumnos = Alumnos::getInstancia();
-        $datos_alumnos = $alumnos->getAll();
+    // public function alumnosExportar()
+    // {
+    //     $alumnos = Alumnos::getInstancia();
+    //     $datos_alumnos = $alumnos->getAll();
 
-        header('Content-Type: text/csv');
-        header('Content-Disposition: attachment; filename="alumnos.csv"');
+    //     header('Content-Type: text/csv');
+    //     header('Content-Disposition: attachment; filename="alumnos.csv"');
 
-        $output = fopen('php://output', 'w');
+    //     $output = fopen('php://output', 'w');
 
-        fputcsv($output, array('id', 'nombre', 'email', 'contrasena', 'activo', 'aula_id', 'grupo_id'));
+    //     fputcsv($output, array('id', 'nombre', 'email', 'contrasena', 'activo', 'aula_id', 'grupo_id'));
 
-        foreach ($datos_alumnos as $alumno) {
-            unset($alumno[0]);
-            fputcsv($output, $alumno);
-        }
-        fclose($output);
-    }
+    //     foreach ($datos_alumnos as $alumno) {
+    //         unset($alumno[0]);
+    //         fputcsv($output, $alumno);
+    //     }
+    //     fclose($output);
+    // }
 
     public function alumnosImportar()
     {
@@ -64,23 +64,20 @@ class AlumnosController extends BaseController
             // Leer la primera fila (encabezados)
             fgetcsv($csv, 0, ';');
 
-
             while (($fila = fgetcsv($csv, 0, ';')) !== false) {
-                
-                $alumnos->setNombre($fila[0]);
-                $alumnos->setEmail("");
-                $alumnos->setContrasena(PASSWORD_DEFAULT); 
-                $alumnos->setActivo(1); 
-                $alumnos->setGrupo($grupos->getGrupoIdByName($fila[1]) ? $grupos->getGrupoIdByName($fila[1]) : null);
+                $nombre_grupo = $fila[1];
+                $grupo_id = $grupos->getGrupoIdByName($fila[1]) ? $grupos->getGrupoIdByName($fila[1]) : null;
 
-                // Guardar el alumno en la base de datos
-                $alumnos->insert($fila);
+                if ($grupo_id) {
+                    $alumnos->insert([$fila[0], $grupo_id]);
+                } else {
+                    echo "El grupo $nombre_grupo no existe.";
+                }
             }
-
             fclose($csv);
 
             // Redireccionar después de insertar los alumnos
-            // header('Location: /admin/alumnos/');
+            header('Location: /admin/alumnos/');
             exit();
         } else {
             echo "Error al abrir el archivo CSV";

@@ -126,6 +126,21 @@ class Alumnos extends DBAbstractModel
         }
     }
 
+
+    public function existeAlumnoPorNombre($nombre)
+    {
+        $this->query = "SELECT COUNT(*) AS total FROM alumnos WHERE nombre = :nombre";
+        $this->params['nombre'] = $nombre;
+        $this->get_results_from_query();
+        if ($this->rows[0]['total'] > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+
     public function existeAlumnoPorEmail($email)
     {
         $this->query = "SELECT COUNT(*) AS total FROM alumnos WHERE email = :email";

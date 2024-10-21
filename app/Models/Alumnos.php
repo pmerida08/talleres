@@ -68,15 +68,19 @@ class Alumnos extends DBAbstractModel
     public function insert($fila)
     {
         $nombre = $fila[0];
-        $email = $fila[1];
-        $contrasena = $fila[2];
-        $activo = $fila[3];
+        $email = null;
+        $contrasena = "root";
+        $activo = 1;
+        $equipo_id = null;
+        $grupo_id = $fila[1];
 
-        $this->query = "INSERT INTO alumnos (nombre, email, contrasena, activo) VALUES (:nombre, :email, :contrasena, :activo)";
+        $this->query = "INSERT INTO alumnos (nombre, email, contrasena, activo, equipo_id, grupo_id) VALUES (:nombre, :email, :contrasena, :activo, :equipo_id, :grupo_id)";
         $this->params['nombre'] = $nombre;
         $this->params['email'] = $email;
         $this->params['contrasena'] = $contrasena;
         $this->params['activo'] = $activo;
+        $this->params['equipo_id'] = $equipo_id;
+        $this->params['grupo_id'] = $grupo_id;
         $this->get_results_from_query();
     }
 
@@ -121,6 +125,21 @@ class Alumnos extends DBAbstractModel
             return false;
         }
     }
+
+
+    public function existeAlumnoPorNombre($nombre)
+    {
+        $this->query = "SELECT COUNT(*) AS total FROM alumnos WHERE nombre = :nombre";
+        $this->params['nombre'] = $nombre;
+        $this->get_results_from_query();
+        if ($this->rows[0]['total'] > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
 
     public function existeAlumnoPorEmail($email)
     {

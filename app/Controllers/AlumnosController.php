@@ -61,19 +61,21 @@ class AlumnosController extends BaseController
 
         if ($csv !== false) {
             stream_filter_append($csv, 'convert.iconv.ISO-8859-9/UTF-8');
-            // Leer la primera fila (encabezados)
             fgetcsv($csv, 0, ';');
 
             while (($fila = fgetcsv($csv, 0, ';')) !== false) {
                 $nombre_grupo = $fila[1];
                 $grupo_id = $grupos->getGrupoIdByName($nombre_grupo) ? $grupos->getGrupoIdByName($nombre_grupo) : null;
 
-                $alumnos->insert([$fila[0], $grupo_id]);
+                if(!$alumnos->existeAlumnoPorNombre($fila[0])) {
+                     $alumnos->insert([$fila[0], $grupo_id]);
+                }
+
+               
             }
             fclose($csv);
 
-            // Redireccionar después de insertar los alumnos
-            header('Location: /admin/alumnos/');
+            header(header: 'Location: /admin/alumnos/');
             exit();
         } else {
             echo "Error al abrir el archivo CSV";

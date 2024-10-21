@@ -54,10 +54,10 @@ $grupos = $data["grupos"];
                         <input type="submit" name="buscar" value="Buscar">
                     </div>
                 </form>
-                <a href="/admin/alumnos/exportar/">
+                <!-- <a href="/admin/alumnos/exportar/">
                     <i class="fas fa-file-export"></i>
                     Exportar
-                </a>
+                </a> -->
                 <a href="#" onclick="mostrarInputFile()">
                     <i class="fas fa-file-import"></i>
                     Importar

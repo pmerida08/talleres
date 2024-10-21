@@ -76,6 +76,23 @@ class Grupos extends DBAbstractModel
         return $this->rows;
     }
 
+    public function getGrupoIdByName($nombreGrupo)
+    {
+        $this->query = "SELECT id FROM grupos WHERE nombre_grupo = :nombre_grupo";
+        $this->params['nombre_grupo'] = $nombreGrupo;
+        $this->get_results_from_query();
+
+        // Verificamos si hay resultados
+        if (isset($this->rows) && !empty($this->rows)) {
+            return $this->rows[0]['id'];
+        } else {
+            // Manejo de error si no se encuentra el grupo
+            echo "No se encontró grupo para: " . htmlspecialchars($nombreGrupo) . "<br>";
+            return null;
+        }
+    }
+
+
     public function setId($id)
     {
         $this->id = $id;

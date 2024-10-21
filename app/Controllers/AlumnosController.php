@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\Alumnos;
+use App\Models\Equipos;
 use App\Models\Profesores;
 use App\Models\Grupos;
 
@@ -36,9 +37,10 @@ class AlumnosController extends BaseController
 
         $output = fopen('php://output', 'w');
 
-        fputcsv($output, array('id', 'nombre', 'email', 'contrasena', 'activo'));
+        fputcsv($output, array('id', 'nombre', 'email', 'contrasena', 'activo', 'aula_id', 'grupo_id'));
 
         foreach ($datos_alumnos as $alumno) {
+            unset($alumno[0]);
             fputcsv($output, $alumno);
         }
         fclose($output);
@@ -52,21 +54,40 @@ class AlumnosController extends BaseController
         }
 
         $alumnos = Alumnos::getInstancia();
+        $grupos = Grupos::getInstancia();
+
         $archivo_tmp = $_FILES["archivoCvs"]["tmp_name"];
         $csv = fopen($archivo_tmp, 'r');
 
         if ($csv !== false) {
-            while (($fila = fgetcsv($csv)) !== false) {
+            stream_filter_append($csv, 'convert.iconv.ISO-8859-9/UTF-8');
+            // Leer la primera fila (encabezados)
+            fgetcsv($csv, 0, ';');
+
+
+            while (($fila = fgetcsv($csv, 0, ';')) !== false) {
+                
+                $alumnos->setNombre($fila[0]);
+                $alumnos->setEmail("");
+                $alumnos->setContrasena(PASSWORD_DEFAULT); 
+                $alumnos->setActivo(1); 
+                $alumnos->setGrupo($grupos->getGrupoIdByName($fila[1]) ? $grupos->getGrupoIdByName($fila[1]) : null);
+
+                // Guardar el alumno en la base de datos
                 $alumnos->insert($fila);
             }
+
             fclose($csv);
 
-            header('Location: /admin/alumnos/');
+            // Redireccionar después de insertar los alumnos
+            // header('Location: /admin/alumnos/');
             exit();
         } else {
             echo "Error al abrir el archivo CSV";
         }
     }
+
+
 
     public function alumnoAdd()
     {

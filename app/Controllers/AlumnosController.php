@@ -66,13 +66,9 @@ class AlumnosController extends BaseController
 
             while (($fila = fgetcsv($csv, 0, ';')) !== false) {
                 $nombre_grupo = $fila[1];
-                $grupo_id = $grupos->getGrupoIdByName($fila[1]) ? $grupos->getGrupoIdByName($fila[1]) : null;
+                $grupo_id = $grupos->getGrupoIdByName($nombre_grupo) ? $grupos->getGrupoIdByName($nombre_grupo) : null;
 
-                if ($grupo_id) {
-                    $alumnos->insert([$fila[0], $grupo_id]);
-                } else {
-                    echo "El grupo $nombre_grupo no existe.";
-                }
+                $alumnos->insert([$fila[0], $grupo_id]);
             }
             fclose($csv);
 

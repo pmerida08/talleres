@@ -82,10 +82,10 @@ $aulasGrupos = $data["aulasGrupos"];
             <h2>Gestiones</h2>
             <ul>
                 <li> <a href="/admin/aulas/">Gestión de aulas</a></li>
-                <li> <a href="/admin/equipos/" id="seleccionado">Gestión de equipos</a></li>
+                <li> <a href="/admin/equipos/">Gestión de equipos</a></li>
                 <li> <a href="/admin/alumnos/">Gestión de alumnos</a></li>
                 <li> <a href="/admin/profesores/">Gestión de profesores</a></li>
-                <li> <a href="/admin/grupos/">Gestión de grupos</a></li>
+                <li> <a href="/admin/grupos/" id="seleccionado">Gestión de grupos</a></li>
                 <li> <a href="/admin/reservas/">Reservas</a></li>
                 <li> <a href="/admin/incidencias/">Incidencias</a></li>
             </ul>

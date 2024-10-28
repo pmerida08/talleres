@@ -126,7 +126,7 @@ class AlumnosController extends BaseController
         // $profesores = Profesores::getInstancia();
 
         if (isset($_POST) && !empty($_POST)) {
-            if (empty($_POST['nombre']) || empty($_POST['email'])) {
+            if (empty($_POST['nombre'])) {
                 $_SESSION["fallo"] = "Completa todos los campos";
                 header("Location: /admin/alumnos/edit/$numero");
                 exit();
@@ -136,11 +136,11 @@ class AlumnosController extends BaseController
             //     header("Location: /admin/alumnos/edit/$numero");
             //     exit();
             // }
-            if (!ctype_alpha($_POST['nombre']) || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-                $_SESSION["fallo"] = "Nombre o email incorrecto";
-                header("Location: /admin/alumnos/edit/$numero");
-                exit();
-            }
+            // if (!ctype_alpha($_POST['nombre'])) {
+            //     $_SESSION["fallo"] = "Nombre o email incorrecto";
+            //     header("Location: /admin/alumnos/edit/$numero");
+            //     exit();
+            // }
             $alumnos->setId($numero);
             $alumnos->setNombre($_POST["nombre"]);
             $alumnos->setEmail($_POST['email']);

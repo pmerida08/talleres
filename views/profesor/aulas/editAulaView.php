@@ -36,7 +36,7 @@
         <input type="number" name="numAula" id="numAula" value="<?= htmlspecialchars($data["numAula"]) ?>" required>
     </label>
     <br>
-    <label>Selecciona los grupos (puede dejarse vacío):
+    <label id="seleGrupos">Selecciona los grupos (puede dejarse vacío): <br>
         <?php foreach ($data["allGrupos"] as $grupo): ?>
             <input type="checkbox" name="grupo_id[]" value="<?= $grupo['id'] ?>"
                 <?php if (in_array($grupo['id'], array_column($data['selectedGrupos'], 'id'))) echo 'checked'; ?>>

@@ -39,7 +39,6 @@ li {
   margin-right: 250px;
 }
 
-
 .botonGestionDatos {
   margin-right: 70px;
 }
@@ -80,6 +79,18 @@ input[type="number"] {
   border-radius: 5px;
   border: 1px solid #ccc;
   box-sizing: border-box;
+}
+
+#seleGrupos {
+  width: 100%;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
 }
 
 select {

@@ -42,12 +42,13 @@
 
                 <label>Selecciona un aula: <br>
                     <select name="aula" id="aula">
+                        <option value=""></option>
                         <?php foreach ($data["aulas"] as $aula): ?>
                             <option value="<?= htmlspecialchars($aula['id']); ?>" <?= ($data["aulaId"] === $aula['id']) ? 'selected' : ''; ?>>
                                 <?= htmlspecialchars($aula['num_aula']); ?>
                             </option>
                         <?php endforeach; ?>
-                        <option value=""></option>
+                        
                     </select>
 
 

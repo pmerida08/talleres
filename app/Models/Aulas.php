@@ -159,4 +159,12 @@ class Aulas extends DBAbstractModel
     {
         return $this->get();
     }
+
+    public function getIdPorNumAula($numAula)
+    {
+        $this->query = "SELECT id FROM aulas WHERE num_aula = :num_aula";
+        $this->params['num_aula'] = $numAula;
+        $this->get_results_from_query();
+        return $this->rows;
+    }
 }

@@ -93,25 +93,27 @@ foreach ($data["grupos"] as $grupo) {
                         <select class="equipo" name="equipos_id">
                         <?php
                     } else {
-                        echo "<select class=\"equipo\" name=\"equipos_id\" disabled>";
+                        echo "<select class=\"equipo\" name=\"equipos_id\" disabled title=\"" . $info . "\">"; // TODO
                     }
                     echo '<option value=""></option>';
                     $descripcion = "";
                     $editar = "";
                     foreach ($data["equipos"] as $key => $equipo) {
+                        $info = "Equipo: " . $equipo["codigo"] . ", Referencia Junta And: " . $equipo["referencia_ja"] . ", Descripción: " . $equipo["descripcion"] . ", Estado: " . $data["estadosEquipos"][$equipo["t_estados_id"]]["estado"];
                         $selected = '';
                         if (!empty($data["ubicaciones"])) {
                             foreach ($data["ubicaciones"] as $ubicacion) {
                                 if ($ubicacion['puesto'] == $puesto) {
                                     if ($ubicacion['equipos_id'] == $equipo['id']) {
                                         $selected = 'selected';
+
                                         $editar = "<a href=\"/admin/equipos/edit/" . $equipo["id"] . "\"><span class=\"material-symbols-outlined edit\">edit</span></a>";
                                     }
                                     break;
                                 }
                             }
                         }
-                        echo '<option value="' . $equipo['id'] . '" ' . $selected . '>' . $equipo['codigo'] . '</option>';
+                        echo '<option value="' . $equipo['id'] . '" ' . $selected . ' title="' . $info . '">' . $equipo['codigo'] . '</option>';
                     }
                         ?>
                         </select>

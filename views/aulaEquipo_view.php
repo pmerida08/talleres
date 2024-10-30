@@ -146,12 +146,13 @@ foreach ($data["grupos"] as $grupo) {
                         <select class="equipo" name="equipos_id">
                         <?php
                     } else {
-                        echo "<select class=\"equipo\" name=\"equipos_id\" disabled>";
+                        echo "<select class=\"equipo\" name=\"equipos_id\" disabled title=\"" . $info . "\">";
                     }
-                    echo '<option value=""></option>';
+                    echo '<option value="" ></option>';
                     $descripcion = "";
                     $editar = "";
                     foreach ($data["equipos"] as $key => $equipo) {
+                        $info = "Equipo: " . $equipo["codigo"] . ", Referencia Junta And: " . $equipo["referencia_ja"] . ", Descripción: " . $equipo["descripcion"] . ", Estado: " . $data["estadosEquipos"][$equipo["t_estados_id"]]["estado"];
                         $selected = '';
                         if (!empty($data["ubicaciones"])) {
                             foreach ($data["ubicaciones"] as $ubicacion) {
@@ -164,7 +165,7 @@ foreach ($data["grupos"] as $grupo) {
                                 }
                             }
                         }
-                        echo '<option value="' . $equipo['id'] . '" ' . $selected . '>' . $equipo['codigo'] . '</option>';
+                        echo '<option value="' . $equipo['id'] . '" ' . $selected . ' title="' . $info . '">' . $equipo['codigo'] . '</option>';
                     }
                         ?>
                         </select>

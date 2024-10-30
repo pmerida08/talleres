@@ -4,7 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="https://www.iesgrancapitan.org/wp-content/uploads/sites/2/2021/06/cropped-icono_web_GranCapitan-32x32.png" type="image/x-icon">
+    <link rel="icon"
+        href="https://www.iesgrancapitan.org/wp-content/uploads/sites/2/2021/06/cropped-icono_web_GranCapitan-32x32.png"
+        type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="../../../css/grupo.css">
     <link rel="stylesheet" href="../../../css/footer.css">
@@ -13,7 +15,9 @@
 
 <body>
     <header>
-        <a href="https://www.iesgrancapitan.org" target="_blanck"><img src="https://www.iesgrancapitan.org/wp-content/uploads/sites/2/2021/06/Logo_IES_GranCapitan_header.png" alt=""></a>
+        <a href="https://www.iesgrancapitan.org" target="_blanck"><img
+                src="https://www.iesgrancapitan.org/wp-content/uploads/sites/2/2021/06/Logo_IES_GranCapitan_header.png"
+                alt=""></a>
         <a href="/admin/grupos/" title="Grupos" class="back-arrow-view">&#8592;</a>
         <?php
         echo "<a href=\"/admin/logout\"><i class=\"fas fa-sign-out-alt botonSesionAdmin\" title=\"Cerrar Sesión\"></i></a>";
@@ -31,26 +35,27 @@
             ?>
             <form action="/admin/grupos/edit/<?= $data["id"] ?>" method="post">
                 <label>Dame el nombre del grupo:
-                    <input type="text" name="nombre_grupo" id="nombre_grupo" value="<?= $data["nombre_grupo"] ?>" required>
+                    <input type="text" name="nombre_grupo" id="nombre_grupo" value="<?= $data["nombre_grupo"] ?>"
+                        required>
                 </label>
+
 
                 <label>Selecciona un aula: <br>
                     <select name="aula" id="aula">
-                        <option value=""> </option>
-                        <?php
-                        foreach ($data["aulas"] as $aula) {
-                            if ($data["aula"] === $aula['id']) {
-                                echo "<option value=\"" . $aula['id'] . "\" selected>" . $aula['num_aula'] . "</option>";
-                                continue;
-                            }
-                            echo "<option value=\"" . $aula['id'] . "\">" . $aula['num_aula'] . "</option>";
-                        }
-                        ?>
+                        <?php foreach ($data["aulas"] as $aula): ?>
+                            <option value="<?= htmlspecialchars($aula['id']); ?>" <?= ($data["aulaId"] === $aula['id']) ? 'selected' : ''; ?>>
+                                <?= htmlspecialchars($aula['num_aula']); ?>
+                            </option>
+                        <?php endforeach; ?>
+                        <option value=""></option>
                     </select>
+
+
                 </label>
 
                 <input type="submit" name="editSubmit" value="Editar">
-                <a href="/admin/grupos/" style="background-color: #de1d1d;color: #fff;padding: 10px 20px;border: none;border-radius: 5px;cursor: pointer;font-size: 16px;">Cancelar</a>
+                <a href="/admin/grupos/"
+                    style="background-color: #de1d1d;color: #fff;padding: 10px 20px;border: none;border-radius: 5px;cursor: pointer;font-size: 16px;">Cancelar</a>
             </form>
         </main>
 

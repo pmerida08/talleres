@@ -90,6 +90,14 @@ class Grupos extends DBAbstractModel
         }
     }
 
+    public function getAulaIdByGrupoId($grupo_id)
+    {
+        $this->query = "SELECT aula_id FROM aulas_grupos WHERE grupo_id = :grupo_id";
+        $this->params['grupo_id'] = $grupo_id;
+        $this->get_results_from_query();
+        return $this->rows;
+    }
+
 
     public function setId($id)
     {
@@ -101,7 +109,6 @@ class Grupos extends DBAbstractModel
         $this->nombre_grupo = $nombre_grupo;
     }
 
-    // Tabla intermedia aulas_grupos
 
     public function getGrupoIdPorAulaId($aula_id)
     {

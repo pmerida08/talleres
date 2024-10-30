@@ -59,7 +59,6 @@ class GruposController extends BaseController
                 exit();
             }
 
-            // Actualizar datos del grupo
             $grupos->setId($numero);
             $grupos->setNombre($_POST['nombre_grupo']);
 
@@ -72,12 +71,13 @@ class GruposController extends BaseController
             header("Location: /admin/grupos/");
             exit();
         }
-
+        $aulaIdArray = $grupos->getAulaIdByGrupoId($numero);
         $data = [
             "id" => $numero,
             "nombre_grupo" => $grupos->getNombre($numero)[0]["nombre_grupo"],
             "aulas" => $aulas->getAll(),
             "grupos" => $grupos->getAll(),
+            "aulaId" => !empty($aulaIdArray) ? $aulaIdArray[0]["aula_id"] : null
         ];
         $this->renderHtml("../views/profesor/grupos/editGrupoView.php", $data);
     }

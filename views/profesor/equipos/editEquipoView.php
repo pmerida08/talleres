@@ -1,3 +1,8 @@
+<?php
+$referer = $_SERVER['HTTP_REFERER'] ;
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,7 +23,7 @@
         <a href="https://www.iesgrancapitan.org" target="_blanck"><img
                 src="https://www.iesgrancapitan.org/wp-content/uploads/sites/2/2021/06/Logo_IES_GranCapitan_header.png"
                 alt=""></a>
-        <a href="/admin/equipos/" title="Equipos" class="back-arrow-view">&#8592;</a>
+        <a href="<?= $_SERVER['HTTP_REFERER'] ?>" title="Equipos" class="back-arrow-view">&#8592;</a>
         <?php
         echo "<a href=\"/admin/logout\"><i class=\"fas fa-sign-out-alt botonSesionAdmin\" title=\"Cerrar Sesión\"></i></a>";
         ?>

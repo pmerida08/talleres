@@ -148,7 +148,7 @@ class AulasController extends BaseController
                 "numAula" => $aula->getnumAula($numero)[0]["num_aula"],
                 "grupos" => $aula->getGrupos($numero),
                 "equipos" => $equipos->getAll(),
-                "estadosEquipos" => $equipos->getAllEstados()
+                "estadosEquipos" => $equipos->getAllEstados(),
             ];
             $this->renderHtml("../views/aulaEquipo_view_Departamento.php", $data);
         } else {
@@ -159,7 +159,7 @@ class AulasController extends BaseController
                 "numAula" => $aula->getnumAula($numero)[0]["num_aula"],
                 "grupos" => $aula->getGrupos($numero),
                 "equipos" => $equipos->getAll(),
-                "estadosEquipos" => $equipos->getAllEstados()
+                "estadosEquipos" => $equipos->getAllEstados(),
             ];
             $this->renderHtml("../views/aulaEquipo_view.php", $data);
         }

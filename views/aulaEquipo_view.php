@@ -23,18 +23,17 @@ foreach ($data["grupos"] as $grupo) {
     <header>
         <a href="https://www.iesgrancapitan.org" target="_blanck"><img src="https://www.iesgrancapitan.org/wp-content/uploads/sites/2/2021/06/Logo_IES_GranCapitan_header.png" alt=""></a>
         <?php
-       if ($_SESSION["perfil"] == "profesor") {
-        echo "<a href=\"/admin/aulas/\" class=\"botonGestionDatos\">Gestión de Datos</a>";
-        echo "<a href=\"/admin/logout\"><i class=\"fas fa-sign-out-alt botonSesionAdmin\"></i></a>";
-        echo "<a href=\"" . $_SERVER['HTTP_REFERER'] . "\" class=\"back-arrow-view\" title=\"Página de Inicio\" style=\"right: 420px;\">&#8592;</a>";
-    } else if ($_SESSION["perfil"] == "alumno") {
-        echo "<a href=\"/admin/logout\"><i class=\"fas fa-sign-out-alt botonSesionAdmin\"></i></a>";
-        echo "<a href=\"" . $_SERVER['HTTP_REFERER'] . "\" class=\"back-arrow-view\" title=\"Página de Inicio\" style=\"right: 250px;\">&#8592;</a>";
-    } else {
-        echo "<a href=\"/login/\" class=\"botonSesionAdmin\">Iniciar Sesión</a>";
-        echo "<a href=\"" . $_SERVER['HTTP_REFERER'] . "\" class=\"back-arrow-view\" title=\"Página de Inicio\" style=\"right: 320px;\">&#8592;</a>";
-    }
-    
+        if ($_SESSION["perfil"] == "profesor") {
+            echo "<a href=\"/admin/aulas/\" class=\"botonGestionDatos\">Gestión de Datos</a>";
+            echo "<a href=\"/admin/logout\"><i class=\"fas fa-sign-out-alt botonSesionAdmin\"></i></a>";
+            echo "<a href=\"/\" class=\"back-arrow-view\"  title=\"Página de Inicio\" style=\"right: 420px;\">&#8592;</a>";
+        } else if ($_SESSION["perfil"] == "alumno") {
+            echo "<a href=\"/admin/logout\"><i class=\"fas fa-sign-out-alt botonSesionAdmin\"></i></a>";
+            echo "<a href=\"/\" class=\"back-arrow-view\"  title=\"Página de Inicio\" style=\"right: 250px;\">&#8592;</a>";
+        } else {
+            echo "<a href=\"/login/\" class=\"botonSesionAdmin\">Iniciar Sesión</a>";
+            echo "<a href=\"/\" class=\"back-arrow-view\"  title=\"Página de Inicio\" style=\"right: 320px;\">&#8592;</a>";
+        }
         ?>
     </header>
     <h1>Dep. Informática</h1>
@@ -143,9 +142,13 @@ foreach ($data["grupos"] as $grupo) {
                     }
                     echo "<div class=\"puesto\" style=\"$css\">";
                     echo "<form action=\"/admin/ubicacion/change\" method=\"post\" class=\"formClaseEquipo\">";
-                    if ($_SESSION["perfil"] != "invitado") { ?>
-                        <select class="equipo" name="equipos_id">
-                        <?php
+                    if ($_SESSION["perfil"] != "invitado") {
+                        $info = "Equipo: " . $equipo["codigo"] . ", Referencia Junta And: " . $equipo["referencia_ja"] . ", Descripción: " . $equipo["descripcion"] . ", Estado: " . $data["estadosEquipos"][$equipo["t_estados_id"]]["estado"];
+
+                        echo "<select class=\"equipo\" name=\"equipos_id\" title=\"" . $info . "\">";
+                ?>
+
+                    <?php
                     } else {
                         echo "<select class=\"equipo\" name=\"equipos_id\" disabled title=\"" . $info . "\">";
                     }
@@ -168,18 +171,18 @@ foreach ($data["grupos"] as $grupo) {
                         }
                         echo '<option value="' . $equipo['id'] . '" ' . $selected . ' title="' . $info . '">' . $equipo['codigo'] . '</option>';
                     }
-                        ?>
-                        </select>
-                        <input type="hidden" name="puesto" value="<?= $puesto ?>">
-                        <input type="hidden" name="idAula" value="<?= $data["idAula"] ?>">
-
-                        <?php
-                        if ($_SESSION["perfil"] == "profesor") {
-                            echo $editar;
-                        }
-                        ?>
+                    ?>
+                    </select>
+                    <input type="hidden" name="puesto" value="<?= $puesto ?>">
+                    <input type="hidden" name="idAula" value="<?= $data["idAula"] ?>">
 
                     <?php
+                    if ($_SESSION["perfil"] == "profesor") {
+                        echo $editar;
+                    }
+                    ?>
+
+                <?php
                     echo "</form>";
                     echo "</div>";
 
@@ -190,7 +193,7 @@ foreach ($data["grupos"] as $grupo) {
 
                     $contadorPuestos++;
                 }
-                    ?>
+                ?>
             </div>
         </div>
     </div>

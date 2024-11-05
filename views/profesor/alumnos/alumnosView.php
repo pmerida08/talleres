@@ -58,13 +58,29 @@ $grupos = $data["grupos"];
                     <i class="fas fa-file-import"></i>
                     Importar
                 </a>
-
+                <?php
+                $info = [];
+                foreach ($grupos as $grupo) {
+                    $info[] = $grupo["nombre_grupo"];
+                }
+                ?>
                 <img src="\imagenes\format.png" alt="formatoCsv" id="format" title="Formato CSV">
 
                 <form id="formArchivo" action="/admin/alumnos/importar/" method="post" enctype="multipart/form-data" style="display: none;">
                     <input type="file" id="archivoCvs" name="archivoCvs" onchange="submitForm()">
                 </form>
+
             </div>
+            <h3 class="subtitulo">Grupos</h3>
+            <ul class="grupos">
+                <?php
+                foreach ($grupos as $grupo) {
+                    echo "<li>" . $grupo["nombre_grupo"] . "</li>";
+                }
+                ?>
+
+            </ul>
+
             <div class="alumnos">
                 <?php
                 foreach ($alumnos as $key => $alumno) {

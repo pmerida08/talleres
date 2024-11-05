@@ -85,6 +85,14 @@ class Equipos extends DBAbstractModel
         $this->message = "equipo borrado";
     }
 
+    public function setEstadoById($id, $estado){
+        $this->query = "UPDATE equipos SET t_estados_id=:t_estados_id WHERE id=:id";
+        $this->params['t_estados_id'] = $estado;
+        $this->params['id'] = $id;
+        $this->get_results_from_query();
+        $this->message = "estado cambiado";
+    }
+
     // Getters Propiedades
     public function getId()
     {
@@ -133,6 +141,8 @@ class Equipos extends DBAbstractModel
         $this->get_results_from_query();
         return $this->rows;    
     }
+
+
 
     // Setters Propiedades
     public function setId($id)

@@ -114,16 +114,11 @@ class Alumnos extends DBAbstractModel
         $this->get_results_from_query();
 
         if (count($this->rows) > 0) {
-            // var_dump($this->rows[0]['contrasena']);
-
-            $hashed_password = password_hash($this->rows[0]['contrasena'], PASSWORD_DEFAULT);
+            $hashed_password = $this->rows[0]['contrasena'];
 
             if (password_verify($contrasena, $hashed_password)) {
-
-                // var_dump("entra");
                 return true;
             } else {
-                // var_dump($contrasena, $hashed_password);
                 return false;
             }
         } else {
@@ -249,7 +244,7 @@ class Alumnos extends DBAbstractModel
         $this->get_results_from_query();
 
         if (count($this->rows) > 0) {
-            $hashed_password = password_hash($this->rows[0]['contrasena'], PASSWORD_DEFAULT);
+            $hashed_password = $this->rows[0]['contrasena'];
             $activo = $this->rows[0]['activo'];
 
             if (password_verify($contrasena, $hashed_password)) {

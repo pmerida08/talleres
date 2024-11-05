@@ -57,110 +57,110 @@ class EquiposController extends BaseController
 
 
     public function editEquipo($url)
-{
-    $numero = explode("/", $url);
-    $numero = end($numero);
+    {
+        $numero = explode("/", $url);
+        $numero = end($numero);
 
-    $equipos = Equipos::getInstancia();
-    $aulas = Aulas::getInstancia();
-    $ubicacionModel = Ubicacion::getInstancia();
-    $alumnosModel = Alumnos::getInstancia();
+        $equipos = Equipos::getInstancia();
+        $aulas = Aulas::getInstancia();
+        $ubicacionModel = Ubicacion::getInstancia();
+        $alumnosModel = Alumnos::getInstancia();
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST)) {
-        if (empty($_POST['codigo']) || empty($_POST['descripcion']) || empty($_POST['estado'])) {
-            $_SESSION["fallo"] = "Completa todos los campos";
-            header("Location: /admin/equipos/edit/$numero");
-            exit();
-        }
-
-        if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
-            $mimeType = mime_content_type($_FILES['imagen']['tmp_name']);
-            $allowedMimeTypes = ['image/jpeg', 'image/png'];
-
-            $extension = strtolower(pathinfo($_FILES['imagen']['name'], PATHINFO_EXTENSION));
-            $allowedExtensions = ['jpg', 'jpeg', 'png'];
-
-            if (in_array($mimeType, $allowedMimeTypes) && in_array($extension, $allowedExtensions)) {
-                $rutaImagenes = '/var/www/html/talleres/public/imagenes/';
-
-                if (!is_dir($rutaImagenes)) {
-                    if (!mkdir($rutaImagenes, 0777, true)) {
-                        $_SESSION["fallo"] = "No se pudo crear el directorio de destino.";
-                        header("Location: /admin/equipos/edit/$numero");
-                        exit();
-                    }
-                }
-
-                $fechaHora = date('Y-m-d-H-i-s');
-                $nuevoNombreArchivo = $fechaHora . '.' . $extension;
-                $archivoDestino = $rutaImagenes . $nuevoNombreArchivo;
-
-                if (!move_uploaded_file($_FILES['imagen']['tmp_name'], $archivoDestino)) {
-                    $error = error_get_last();
-                    $_SESSION["fallo"] = "No se pudo mover el archivo subido. Error: " . $error['message'];
-                    header("Location: /admin/equipos/edit/$numero");
-                    exit();
-                }
-            } else {
-                $_SESSION["fallo"] = "Solo se permiten archivos JPG y PNG.";
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST)) {
+            if (empty($_POST['codigo']) || empty($_POST['descripcion']) || empty($_POST['estado'])) {
+                $_SESSION["fallo"] = "Completa todos los campos";
                 header("Location: /admin/equipos/edit/$numero");
                 exit();
             }
+
+            if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
+                $mimeType = mime_content_type($_FILES['imagen']['tmp_name']);
+                $allowedMimeTypes = ['image/jpeg', 'image/png'];
+
+                $extension = strtolower(pathinfo($_FILES['imagen']['name'], PATHINFO_EXTENSION));
+                $allowedExtensions = ['jpg', 'jpeg', 'png'];
+
+                if (in_array($mimeType, $allowedMimeTypes) && in_array($extension, $allowedExtensions)) {
+                    $rutaImagenes = '/var/www/html/talleres/public/imagenes/';
+
+                    if (!is_dir($rutaImagenes)) {
+                        if (!mkdir($rutaImagenes, 0777, true)) {
+                            $_SESSION["fallo"] = "No se pudo crear el directorio de destino.";
+                            header("Location: /admin/equipos/edit/$numero");
+                            exit();
+                        }
+                    }
+
+                    $fechaHora = date('Y-m-d-H-i-s');
+                    $nuevoNombreArchivo = $fechaHora . '.' . $extension;
+                    $archivoDestino = $rutaImagenes . $nuevoNombreArchivo;
+
+                    if (!move_uploaded_file($_FILES['imagen']['tmp_name'], $archivoDestino)) {
+                        $error = error_get_last();
+                        $_SESSION["fallo"] = "No se pudo mover el archivo subido. Error: " . $error['message'];
+                        header("Location: /admin/equipos/edit/$numero");
+                        exit();
+                    }
+                } else {
+                    $_SESSION["fallo"] = "Solo se permiten archivos JPG y PNG.";
+                    header("Location: /admin/equipos/edit/$numero");
+                    exit();
+                }
+            }
+
+            $equipos->setId($numero);
+            $equipos->setcodigo($_POST["codigo"]);
+            $equipos->setdescripcion($_POST['descripcion']);
+            $equipos->setreferencia_ja($_POST['referenciaJa'] != null ? $_POST['referenciaJa'] : "");
+            $equipos->setImagen(
+                ($nuevoNombreArchivo ?? null)
+                    ? $nuevoNombreArchivo
+                    : (
+                        ($equipos->getImagen($numero)[0]["imagen"] ?? null)
+                        ? $equipos->getImagen($numero)[0]["imagen"]
+                        : ""
+                    )
+            );
+            $equipos->setEstado($_POST['estado']);
+            $equipos->edit();
+
+            if (!empty($_POST['aula_id']) && !empty($_POST['puesto'])) {
+                $ubicacionModel->deletePorEquipo($numero);
+                $ubicacionModel->setEquipos_id($numero);
+                $ubicacionModel->setAulas_id($_POST['aula_id']);
+                $ubicacionModel->setPuesto($_POST['puesto']);
+                $ubicacionModel->set();
+            }
+
+            header("Location: /admin/equipos/");
+            exit();
         }
 
-        $equipos->setId($numero);
-        $equipos->setcodigo($_POST["codigo"]);
-        $equipos->setdescripcion($_POST['descripcion']);
-        $equipos->setreferencia_ja($_POST['referenciaJa'] != null ? $_POST['referenciaJa'] : "");
-        $equipos->setImagen(
-            ($nuevoNombreArchivo ?? null)
-                ? $nuevoNombreArchivo
-                : (
-                    ($equipos->getImagen($numero)[0]["imagen"] ?? null)
-                    ? $equipos->getImagen($numero)[0]["imagen"]
-                    : ""
-                )
-        );
-        $equipos->setEstado($_POST['estado']);
-        $equipos->edit();
-
-        if (!empty($_POST['aula_id']) && !empty($_POST['puesto'])) {
-            $ubicacionModel->deletePorEquipo($numero); 
-            $ubicacionModel->setEquipos_id($numero);
-            $ubicacionModel->setAulas_id($_POST['aula_id']);
-            $ubicacionModel->setPuesto($_POST['puesto']);
-            $ubicacionModel->set();
+        $equipo = $equipos->get($numero);
+        if (!$equipo) {
+            $_SESSION["fallo"] = "El equipo no existe.";
+            header("Location: /admin/equipos/");
+            exit();
         }
 
-        header("Location: /admin/equipos/");
-        exit();
+        $alumnosAsignados = $alumnosModel->getAlumnosPorEquipo($numero);
+        $ubicacion = $ubicacionModel->getPorEquiposId($numero);
+
+        $data = [
+            "id" => $numero,
+            "codigo" => $equipos->getcodigo($numero)[0]["codigo"],
+            "descripcion" => $equipos->getdescripcion($numero)[0]["descripcion"],
+            "referencia_ja" => $equipos->getreferencia_ja($numero)[0]["referencia_ja"],
+            "imagen" => $equipos->getImagen($numero)[0]["imagen"],
+            "estado" => $equipos->getEstado($numero)[0]["t_estados_id"],
+            "estados" => $equipos->getAllEstados(),
+            "alumnosAsignados" => $alumnosAsignados,
+            "aulas" => $aulas->getAll(),
+            "ubicacion" => $ubicacion[0] ?? null
+        ];
+
+        $this->renderHtml("../views/profesor/equipos/editEquipoView.php", $data);
     }
-
-    $equipo = $equipos->get($numero);
-    if (!$equipo) {
-        $_SESSION["fallo"] = "El equipo no existe.";
-        header("Location: /admin/equipos/");
-        exit();
-    }
-
-    $alumnosAsignados = $alumnosModel->getAlumnosPorEquipo($numero);
-    $ubicacion = $ubicacionModel->getPorEquiposId($numero);
-
-    $data = [
-        "id" => $numero,
-        "codigo" => $equipos->getcodigo($numero)[0]["codigo"],
-        "descripcion" => $equipos->getdescripcion($numero)[0]["descripcion"],
-        "referencia_ja" => $equipos->getreferencia_ja($numero)[0]["referencia_ja"],
-        "imagen" => $equipos->getImagen($numero)[0]["imagen"],
-        "estado" => $equipos->getEstado($numero)[0]["t_estados_id"],
-        "estados" => $equipos->getAllEstados(),
-        "alumnosAsignados" => $alumnosAsignados,
-        "aulas" => $aulas->getAll(),
-        "ubicacion" => $ubicacion[0] ?? null
-    ];
-
-    $this->renderHtml("../views/profesor/equipos/editEquipoView.php", $data);
-}
 
 
     public function addEquipo()
@@ -323,12 +323,12 @@ class EquiposController extends BaseController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $alumno_id = $_POST['alumno_id'];
-
             if (!$alumno_id) {
                 $error = "Debe seleccionar un alumno.";
             } else {
                 $alumnosModel = Alumnos::getInstancia();
                 $alumnosModel->asignarEquipo($alumno_id, $numero_pc);
+                $equiposModel->setEstadoById($numero_pc, 6);
 
                 header('Location: /admin/equipos/');
                 exit;

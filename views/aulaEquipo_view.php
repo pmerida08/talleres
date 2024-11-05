@@ -26,13 +26,13 @@ foreach ($data["grupos"] as $grupo) {
         if ($_SESSION["perfil"] == "profesor") {
             echo "<a href=\"/admin/aulas/\" class=\"botonGestionDatos\">Gestión de Datos</a>";
             echo "<a href=\"/admin/logout\"><i class=\"fas fa-sign-out-alt botonSesionAdmin\"></i></a>";
-            echo "<a href=\"/\" class=\"back-arrow-view\"  title=\"Página de Inicio\" style=\"right: 420px;\">&#8592;</a>";
+            echo "<a href=\"" . $_SERVER['HTTP_REFERER'] . "\" class=\"back-arrow-view\" title=\"Página de Inicio\" style=\"right: 420px;\">&#8592;</a>";
         } else if ($_SESSION["perfil"] == "alumno") {
             echo "<a href=\"/admin/logout\"><i class=\"fas fa-sign-out-alt botonSesionAdmin\"></i></a>";
-            echo "<a href=\"/\" class=\"back-arrow-view\"  title=\"Página de Inicio\" style=\"right: 250px;\">&#8592;</a>";
+            echo "<a href=\"" . $_SERVER['HTTP_REFERER'] . "\" class=\"back-arrow-view\" title=\"Página de Inicio\" style=\"right: 420px;\">&#8592;</a>";
         } else {
             echo "<a href=\"/login/\" class=\"botonSesionAdmin\">Iniciar Sesión</a>";
-            echo "<a href=\"/\" class=\"back-arrow-view\"  title=\"Página de Inicio\" style=\"right: 320px;\">&#8592;</a>";
+            echo "<a href=\"" . $_SERVER['HTTP_REFERER'] . "\" class=\"back-arrow-view\" title=\"Página de Inicio\" style=\"right: 420px;\">&#8592;</a>";
         }
         ?>
     </header>

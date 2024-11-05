@@ -93,7 +93,7 @@ $referer = $_SERVER['HTTP_REFERER'] ;
                 <ul>
                     <?php foreach ($data['alumnosAsignados'] as $alumno): ?>
                         <li>
-                            <?= htmlspecialchars($alumno['nombre']) ?> (<?= htmlspecialchars($alumno['email']) ?>)
+                            <?= htmlspecialchars($alumno['nombre']) ?>
                             <form action="/admin/equipos/edit/<?= $data['id'] ?>/borrarAlumno" method="POST"
                                 style="display:inline;">
                                 <input type="hidden" name="alumno_id" value="<?= $alumno['id'] ?>">

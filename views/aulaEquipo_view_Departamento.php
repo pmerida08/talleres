@@ -93,7 +93,7 @@ foreach ($data["grupos"] as $grupo) {
                         <select class="equipo" name="equipos_id">
                         <?php
                     } else {
-                        echo "<select class=\"equipo\" name=\"equipos_id\" disabled title=\"" . $info . "\">"; // TODO
+                        echo "<select class=\"equipo\" name=\"equipos_id\" disabled title=\"" . $info . "\">"; 
                     }
                     echo '<option value=""></option>';
                     $descripcion = "";
